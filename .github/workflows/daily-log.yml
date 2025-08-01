@@ -22,8 +22,10 @@ jobs:
           DATE=$(date -u +'%Y-%m-%d')
           echo "- ✅ $DATE: Automated daily log entry" >> README.md
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git add README.md
-          git commit -m "Daily log update: $DATE"
+          git commit -m "Daily log update: $(date -u +'%Y-%m-%d')" || echo "No changes to commit"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
